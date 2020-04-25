@@ -12,6 +12,8 @@ public class AfishaManager {
     private Film[] film = new Film[0];
     private int lengthOfAfisha = 10;
 
+
+
     //Создаём афишу
     public void FilmAdd(Film films) {
 
