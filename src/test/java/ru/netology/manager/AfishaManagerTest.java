@@ -24,9 +24,8 @@ class AfishaManagerTest {
 
     @BeforeEach
     public void shouldSetup() {
-
         manager = new AfishaManager();
-        //Зaписываем в массив film[]
+        //Зaписываем в массив Film[]
         manager.FilmAdd(first);
         manager.FilmAdd(second);
         manager.FilmAdd(third);
