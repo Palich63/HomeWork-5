@@ -2,25 +2,26 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import ru.netology.domain.Film;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
+@ExtendWith(Mockito)
 class AfishaManagerTest {
 
-    AfishaManager manager;
+    private AfishaManager manager;
     // Создаём фильмы
-    Film first = new Film(1, "Бладшот", "боевик");
-    Film second = new Film(2, "Вперёд", "мультфильм");
-    Film third = new Film(3, "Отель-Белград", "комедия");
-    Film fourth = new Film(4, "Маяк", "ужасы");
-    Film fifth = new Film(5, "Полицейская история", "боевик");
-    Film sixth = new Film(6, "Вперёд", "мультфильм");
-    Film seventh = new Film(7, "Джуманджи: Новый уровень", "боевик, приключение");
-    Film eighth = new Film(8, "Приди ко мне", "ужасы");
-    Film ninth = new Film(9, "Пингвинёнок Пороро", "мультфильм");
-    Film tenth = new Film(10, "Котёл", "драма");
-    Film eleventh = new Film(11, "1+1", "драма, комедия");
+    private Film first = new Film(1, "Бладшот", "боевик");
+    private Film second = new Film(2, "Вперёд", "мультфильм");
+    private Film third = new Film(3, "Отель-Белград", "комедия");
+    private Film fourth = new Film(4, "Маяк", "ужасы");
+    private Film fifth = new Film(5, "Полицейская история", "боевик");
+    private Film sixth = new Film(6, "Вперёд", "мультфильм");
+    private Film seventh = new Film(7, "Джуманджи: Новый уровень", "боевик, приключение");
+    private Film eighth = new Film(8, "Приди ко мне", "ужасы");
+    private Film ninth = new Film(9, "Пингвинёнок Пороро", "мультфильм");
+    private Film tenth = new Film(10, "Котёл", "драма");
+    private Film eleventh = new Film(11, "1+1", "драма, комедия");
 
     @BeforeEach
     public void shouldSetup() {
