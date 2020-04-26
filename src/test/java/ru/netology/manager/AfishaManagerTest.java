@@ -1,31 +1,28 @@
 package ru.netology.manager;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import ru.netology.domain.Film;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-@ExtendWith(Mockito)
+
+//@ExtendWith(Mockito)
 class AfishaManagerTest {
 
-    private AfishaManager manager;
+    AfishaManager manager;
     // Создаём фильмы
-    private Film first = new Film(1, "Бладшот", "боевик");
-    private Film second = new Film(2, "Вперёд", "мультфильм");
-    private Film third = new Film(3, "Отель-Белград", "комедия");
-    private Film fourth = new Film(4, "Маяк", "ужасы");
-    private Film fifth = new Film(5, "Полицейская история", "боевик");
-    private Film sixth = new Film(6, "Вперёд", "мультфильм");
-    private Film seventh = new Film(7, "Джуманджи: Новый уровень", "боевик, приключение");
-    private Film eighth = new Film(8, "Приди ко мне", "ужасы");
-    private Film ninth = new Film(9, "Пингвинёнок Пороро", "мультфильм");
-    private Film tenth = new Film(10, "Котёл", "драма");
-    private Film eleventh = new Film(11, "1+1", "драма, комедия");
+    static Film first = new Film(1, "Бладшот", "боевик");
+    static Film second = new Film(2, "Вперёд", "мультфильм");
+    static Film third = new Film(3, "Отель-Белград", "комедия");
+    static Film fourth = new Film(4, "Маяк", "ужасы");
+    static Film fifth = new Film(5, "Полицейская история", "боевик");
+    static Film sixth = new Film(6, "Вперёд", "мультфильм");
+    static Film seventh = new Film(7, "Джуманджи: Новый уровень", "боевик, приключение");
+    static Film eighth = new Film(8, "Приди ко мне", "ужасы");
+    static Film ninth = new Film(9, "Пингвинёнок Пороро", "мультфильм");
+    static Film tenth = new Film(10, "Котёл", "драма");
+    static Film eleventh = new Film(11, "1+1", "драма, комедия");
 
-    @BeforeEach
-    public void shouldSetup() {
-        manager = new AfishaManager();
+    static void filmsAddToManager(AfishaManager manager) {
         //Зaписываем в массив Film[]
         manager.FilmAdd(first);
         manager.FilmAdd(second);
@@ -42,6 +39,8 @@ class AfishaManagerTest {
 
     @Test
     void shouldfilmAddToAfisha() {
+        manager = new AfishaManager();
+        filmsAddToManager(manager);
         //Массива фильмов в прямом порядке и его проверка
         Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
         Film[] actual = manager.getFilm();
@@ -50,18 +49,11 @@ class AfishaManagerTest {
     }
 
     @Test
-    void shouldDisplayByDefaultAfisha() {
-        //Выводим фильмы в обратном порядке (по умолчанию 10)
-        Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
-        Film[] actual = manager.showAfisha();
-
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
     void shouldDisplayfiveFilmsInAfisha() {
+        manager = new AfishaManager(5);
+        filmsAddToManager(manager);
+
         //Выводим последние 5 фильмов
-        manager = new AfishaManager(manager.getFilm(), 5);
         Film[] expectedLastFive = new Film[]{eleventh, tenth, ninth, eighth, seventh};
         Film[] actualLastFive = manager.showAfisha();
 
@@ -70,11 +62,25 @@ class AfishaManagerTest {
 
     @Test
     void shouldDisplayThreeFilmsInAfisha() {
+        manager = new AfishaManager(3);
+        filmsAddToManager(manager);
+
         //Выводим последние 3 фильмов
-        manager = new AfishaManager(manager.getFilm(), 3);
         Film[] expectedLastThree = new Film[]{eleventh, tenth, ninth};
         Film[] actualLastThree = manager.showAfisha();
 
         assertArrayEquals(expectedLastThree, actualLastThree);
+    }
+
+    @Test
+    void shouldDisplayByDefaultAfisha() {
+        manager = new AfishaManager();
+        filmsAddToManager(manager);
+
+        //Выводим фильмы в обратном порядке (по умолчанию 10)
+        Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Film[] actual = manager.showAfisha();
+
+        assertArrayEquals(expected, actual);
     }
 }
