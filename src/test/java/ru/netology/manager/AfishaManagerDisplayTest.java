@@ -10,7 +10,7 @@ class AfishaManagerDisplayTest {
     @Test
     void shouldLessDisplayFilm() {
         AfishaManager manager = new AfishaManager();
-        // Если в массиве меньше 10 фильмов
+        // Если в массиве меньше 10 фильмов выводим столько сколько есть.
         Film first = new Film(1, "Бладшот", "боевик");
         Film second = new Film(2, "Вперёд", "мультфильм");
         Film third = new Film(3, "Отель-Белград", "комедия");
