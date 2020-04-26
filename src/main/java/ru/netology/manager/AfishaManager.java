@@ -9,9 +9,13 @@ import ru.netology.domain.Film;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AfishaManager {
-    private AfishaRepository repository;
+
     private Film[] film = new Film[0];
     private int lengthOfAfisha = 10;
+
+    public AfishaManager(int lengthOfAfisha) {
+        this.lengthOfAfisha = lengthOfAfisha;
+    }
 
     //Создаём афишу
     public void FilmAdd(Film films) {
