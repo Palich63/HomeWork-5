@@ -40,7 +40,7 @@ public class AfishaRepositoryTest {
         manager.filmAdd(eighth);
         manager.filmAdd(ninth);
         manager.filmAdd(tenth);
-        manager.filmAdd(eleventh);
+       // manager.filmAdd(eleventh);
     }
 
     @Test
@@ -54,6 +54,6 @@ public class AfishaRepositoryTest {
         manager = new AfishaManager();
         filmsAddToManager(manager);
 
-        manager.add();
+        Film actual = manager.add(first);
     }
 }

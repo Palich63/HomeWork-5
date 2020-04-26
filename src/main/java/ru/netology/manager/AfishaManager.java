@@ -11,21 +11,27 @@ import ru.netology.repository.AfishaRepository;
 @AllArgsConstructor
 public class AfishaManager {
 
-    private Film[] film = new Film[0];
-    private int lengthOfAfisha = 10;
-
     private AfishaRepository repository;
 
     public AfishaManager(AfishaRepository repository) {
         this.repository = repository;
     }
 
+    private Film[] film = new Film[0];
+    private int lengthOfAfisha = 10;
+
+
     public AfishaManager(int lengthOfAfisha) {
         this.lengthOfAfisha = lengthOfAfisha;
     }
 
-    public void add(Film films){
+    public AfishaManager(Film[] film) {
+        this.film = film;
+    }
+
+    public Film add(Film films){
         repository.save(films);
+        return films;
     }
 
     //Создаём афишу

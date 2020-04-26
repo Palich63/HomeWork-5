@@ -2,23 +2,22 @@ package ru.netology.repository;
 
 import ru.netology.domain.Film;
 
-public class AfishaRepository {
+public class    AfishaRepository {
 
-    Film[] film = new Film[0];
+    private Film[] film = new Film[0];
 
     public Film[] findAll() {
         return film;
     }
 
-    public void findById(int id) {
-        Film[] tmpfilm = new Film[1];
-        int index = 0;
+    public Film[] findById(int id) {
         for (Film film : film) {
             if (film.getId() == id) {
-                tmpfilm[1] = film;
+
             }
+
         }
-        film = tmpfilm;
+return film;
 
     }
 
@@ -45,7 +44,7 @@ public class AfishaRepository {
     }
 
     void removeAll() {
-        film = null;
+        film = new Film[0];
 
     }
 }
