@@ -1,11 +1,14 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import ru.netology.domain.Film;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
+@ExtendWith(MockitoExtention.class)
 class AfishaManagerTest {
+@Mock
+private AfishaRepository repository;
 
     @Test
     void shouldfilmAddToAfisha() {
@@ -89,5 +92,4 @@ class AfishaManagerTest {
 
         assertArrayEquals(expectedLastThree, actualLastThree);
     }
-
 }
