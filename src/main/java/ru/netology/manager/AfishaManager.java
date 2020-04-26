@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.netology.domain.Film;
+import ru.netology.repository.AfishaRepository;
 
 @Data
 @NoArgsConstructor
@@ -13,12 +14,22 @@ public class AfishaManager {
     private Film[] film = new Film[0];
     private int lengthOfAfisha = 10;
 
+    private AfishaRepository repository;
+
+    public AfishaManager(AfishaRepository repository) {
+        this.repository = repository;
+    }
+
     public AfishaManager(int lengthOfAfisha) {
         this.lengthOfAfisha = lengthOfAfisha;
     }
 
+    public void add(Film films){
+        repository.save(films);
+    }
+
     //Создаём афишу
-    public void FilmAdd(Film films) {
+    public void filmAdd(Film films) {
 
         int length = film.length + 1;
         Film[] tmpfilm = new Film[length];

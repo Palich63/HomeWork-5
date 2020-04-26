@@ -1,11 +1,19 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Film;
+import ru.netology.repository.AfishaRepository;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-class AfishaManagerTest {
+@ExtendWith(MockitoExtension.class)
+public class AfishaRepositoryTest {
 
+    @Mock //подставляем заглушку вместо реальной реализации
+    private AfishaRepository repository;
+    @InjectMocks //подставляем заглушку в конструктор
     private AfishaManager manager;
     // Создаём фильмы
     private static Film first = new Film(1, "Бладшот", "боевик");
@@ -36,49 +44,16 @@ class AfishaManagerTest {
     }
 
     @Test
-    void shouldfilmAddToAfisha() {
+    void shouldfindAll() {
         manager = new AfishaManager();
         filmsAddToManager(manager);
-        //Массива фильмов в прямом порядке и его проверка
-        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
-        Film[] actual = manager.getFilm();
-
-        assertArrayEquals(expected, actual);
     }
 
     @Test
-    void shouldDisplayfiveFilmsInAfisha() {
-        manager = new AfishaManager(5);
-        filmsAddToManager(manager);
-
-        //Выводим последние 5 фильмов
-        Film[] expectedLastFive = new Film[]{eleventh, tenth, ninth, eighth, seventh};
-        Film[] actualLastFive = manager.showAfisha();
-
-        assertArrayEquals(expectedLastFive, actualLastFive);
-    }
-
-    @Test
-    void shouldDisplayThreeFilmsInAfisha() {
-        manager = new AfishaManager(3);
-        filmsAddToManager(manager);
-
-        //Выводим последние 3 фильмов
-        Film[] expectedLastThree = new Film[]{eleventh, tenth, ninth};
-        Film[] actualLastThree = manager.showAfisha();
-
-        assertArrayEquals(expectedLastThree, actualLastThree);
-    }
-
-    @Test
-    void shouldDisplayByDefaultAfisha() {
+    void shouldAdd() {
         manager = new AfishaManager();
         filmsAddToManager(manager);
 
-        //Выводим фильмы в обратном порядке (по умолчанию 10)
-        Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
-        Film[] actual = manager.showAfisha();
-
-        assertArrayEquals(expected, actual);
+        manager.add();
     }
 }

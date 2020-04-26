@@ -20,14 +20,13 @@ class AfishaManagerDisplayTest {
         Film seventh = new Film(7, "Джуманджи: Новый уровень", "боевик, приключение");
 
         //Зaписываем в массив film[]
-        manager.FilmAdd(first);
-        manager.FilmAdd(second);
-        manager.FilmAdd(third);
-        manager.FilmAdd(fourth);
-        manager.FilmAdd(fifth);
-        manager.FilmAdd(sixth);
-        manager.FilmAdd(seventh);
-
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        manager.filmAdd(seventh);
         //Массив фильмов в обратном порядке
         Film[] expectedSeven = new Film[]{seventh, sixth, fifth, fourth, third, second, first};
         Film[] actualSeven = manager.showAfisha();
