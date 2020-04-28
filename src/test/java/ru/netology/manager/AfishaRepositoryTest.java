@@ -1,59 +1,73 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Film;
 import ru.netology.repository.AfishaRepository;
 
-@ExtendWith(MockitoExtension.class)
-public class AfishaRepositoryTest {
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    @Mock //подставляем заглушку вместо реальной реализации
-    private AfishaRepository repository;
-    @InjectMocks //подставляем заглушку в конструктор
-    private AfishaManager manager;
+class AfishaRepositoryTest {
+
+    AfishaRepository repo = new AfishaRepository();
+
     // Создаём фильмы
-    private static Film first = new Film(1, "Бладшот", "боевик");
-    private static Film second = new Film(2, "Вперёд", "мультфильм");
-    private static Film third = new Film(3, "Отель-Белград", "комедия");
-    private static Film fourth = new Film(4, "Маяк", "ужасы");
-    private static Film fifth = new Film(5, "Полицейская история", "боевик");
-    private static Film sixth = new Film(6, "Вперёд", "мультфильм");
-    private static Film seventh = new Film(7, "Джуманджи: Новый уровень", "боевик, приключение");
-    private static Film eighth = new Film(8, "Приди ко мне", "ужасы");
-    private static Film ninth = new Film(9, "Пингвинёнок Пороро", "мультфильм");
-    private static Film tenth = new Film(10, "Котёл", "драма");
-    private static Film eleventh = new Film(11, "1+1", "драма, комедия");
+    private Film first = new Film(1, "Бладшот", "боевик");
+    private Film second = new Film(2, "Вперёд", "мультфильм");
+    private Film third = new Film(3, "Отель-Белград", "комедия");
+    private Film fourth = new Film(4, "Маяк", "ужасы");
+    private Film fifth = new Film(5, "Полицейская история", "боевик");
 
-    static void filmsAddToManager(AfishaManager manager) {
+    void filmsAddToRepository(AfishaRepository repo) {
         //Зaписываем в массив Film[]
-        manager.filmAdd(first);
-        manager.filmAdd(second);
-        manager.filmAdd(third);
-        manager.filmAdd(fourth);
-        manager.filmAdd(fifth);
-        manager.filmAdd(sixth);
-        manager.filmAdd(seventh);
-        manager.filmAdd(eighth);
-        manager.filmAdd(ninth);
-        manager.filmAdd(tenth);
-       // manager.filmAdd(eleventh);
+        repo.save(first);
+        repo.save(second);
+        repo.save(third);
+        repo.save(fourth);
+        repo.save(fifth);
     }
 
     @Test
-    void shouldfindAll() {
-        manager = new AfishaManager();
-        filmsAddToManager(manager);
+    void shouldCleanAll() {
+        filmsAddToRepository(repo);
+        //Очищаем массив
+        repo.removeAll();
+        Film[] expected = new Film[0];
+        Film[] actual = repo.findAll();
+
+        assertArrayEquals(expected, actual);
+
     }
 
     @Test
-    void shouldAdd() {
-        manager = new AfishaManager();
-        filmsAddToManager(manager);
+    void shouldFindById() {
+        filmsAddToRepository(repo);
+        //Ищим валидный элемент
+        Film expected = new Film(3, "Отель-Белград", "комедия");
+        Film actual = repo.findById(3);
 
-        Film actual = manager.add(first);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldFindNull() {
+        filmsAddToRepository(repo);
+        //Возвращаем Null если не находим элемент
+         Film actual = repo.findById(6);
+
+        assertEquals(null, actual);
+    }
+
+    @Test
+    void shouldRemoveById() {
+        filmsAddToRepository(repo);
+        //Удаляем валидный элемент
+        Film[] expected = new Film[]{first, second, third, fifth};
+        repo.removeById(4);
+        Film[] actual = repo.findAll();
+
+        assertArrayEquals(expected, actual);
+
+
     }
 }

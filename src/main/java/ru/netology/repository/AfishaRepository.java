@@ -1,50 +1,51 @@
 package ru.netology.repository;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.netology.domain.Film;
 
-public class    AfishaRepository {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AfishaRepository {
 
-    private Film[] film = new Film[0];
+    private Film[] films = new Film[0];
+
+    public void save(Film film) {
+        Film[] tmpfilm = new Film[films.length + 1];
+        System.arraycopy(films, 0, tmpfilm, 0, films.length);
+        tmpfilm[tmpfilm.length - 1] = film;
+        films = tmpfilm;
+    }
 
     public Film[] findAll() {
-        return film;
+        return films;
     }
 
-    public Film[] findById(int id) {
-        for (Film film : film) {
+    public Film findById(int id) {
+        for (Film film : films) {
             if (film.getId() == id) {
-
+                return film;
             }
-
         }
-return film;
-
-    }
-
-    public void save(Film films) {
-        int length = film.length + 1;
-        Film[] tmpfilm = new Film[length];
-        System.arraycopy(film, 0, tmpfilm, 0, film.length);
-        int lastIndex = tmpfilm.length - 1;
-        tmpfilm[lastIndex] = films;
-        film = tmpfilm;
+        return null;
     }
 
     public void removeById(int id) {
-        int length = film.length - 1;
-        Film[] tmpfilm = new Film[length];
+        Film[] tmpfilm = new Film[films.length - 1];
         int index = 0;
-        for (Film film : film) {
+        for (Film film : films) {
             if (film.getId() != id) {
                 tmpfilm[index] = film;
                 index++;
             }
         }
-        film = tmpfilm;
+        films = tmpfilm;
     }
 
-    void removeAll() {
-        film = new Film[0];
+    public void removeAll() {
+        films = new Film[0];
 
     }
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.domain.Film;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 class AfishaManagerTest {
 
     private AfishaManager manager;
@@ -22,40 +23,13 @@ class AfishaManagerTest {
 
     static void filmsAddToManager(AfishaManager manager) {
         //Зaписываем в массив Film[]
-        manager.filmAdd(first);
-        manager.filmAdd(second);
-        manager.filmAdd(third);
-        manager.filmAdd(fourth);
-        manager.filmAdd(fifth);
-        manager.filmAdd(sixth);
-        manager.filmAdd(seventh);
-        manager.filmAdd(eighth);
-        manager.filmAdd(ninth);
-        manager.filmAdd(tenth);
-        manager.filmAdd(eleventh);
-    }
-
-    @Test
-    void shouldfilmAddToAfisha() {
-        manager = new AfishaManager();
-        filmsAddToManager(manager);
-        //Массива фильмов в прямом порядке и его проверка
-        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
-        Film[] actual = manager.getFilm();
-
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void shouldDisplayfiveFilmsInAfisha() {
-        manager = new AfishaManager(5);
-        filmsAddToManager(manager);
-
-        //Выводим последние 5 фильмов
-        Film[] expectedLastFive = new Film[]{eleventh, tenth, ninth, eighth, seventh};
-        Film[] actualLastFive = manager.showAfisha();
-
-        assertArrayEquals(expectedLastFive, actualLastFive);
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
     }
 
     @Test
@@ -64,20 +38,63 @@ class AfishaManagerTest {
         filmsAddToManager(manager);
 
         //Выводим последние 3 фильмов
-        Film[] expectedLastThree = new Film[]{eleventh, tenth, ninth};
+        Film[] expectedLastThree = new Film[]{seventh, sixth, fifth};
         Film[] actualLastThree = manager.showAfisha();
 
         assertArrayEquals(expectedLastThree, actualLastThree);
     }
 
     @Test
+    void shouldDisplayfiveFilmsInAfisha() {
+        manager = new AfishaManager(5);
+        filmsAddToManager(manager);
+
+        //Выводим последние 5 фильмов
+        Film[] expectedLastFive = new Film[]{seventh, sixth, fifth, fourth, third};
+        Film[] actualLastFive = manager.showAfisha();
+
+        assertArrayEquals(expectedLastFive, actualLastFive);
+    }
+
+    @Test
+    void shouldLessDisplayFilm() {
+        manager = new AfishaManager();
+        filmsAddToManager(manager);
+
+        // Если в массиве меньше 10 фильмов выводим столько сколько есть.
+        Film[] expectedSeven = new Film[]{seventh, sixth, fifth, fourth, third, second, first};
+        Film[] actualSeven = manager.showAfisha();
+
+        assertArrayEquals(expectedSeven, actualSeven);
+    }
+
+    @Test
     void shouldDisplayByDefaultAfisha() {
         manager = new AfishaManager();
         filmsAddToManager(manager);
+        manager.add(eighth);
+        manager.add(ninth);
+        manager.add(tenth);
+        manager.add(eleventh);
 
         //Выводим фильмы в обратном порядке (по умолчанию 10)
         Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Film[] actual = manager.showAfisha();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldfilmAddToAfisha() {
+        manager = new AfishaManager();
+        filmsAddToManager(manager);
+        manager.add(eighth);
+        manager.add(ninth);
+        manager.add(tenth);
+
+        //Массива фильмов в прямом порядке и его проверка
+        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
+        Film[] actual = manager.show();
 
         assertArrayEquals(expected, actual);
     }

@@ -11,52 +11,40 @@ import ru.netology.repository.AfishaRepository;
 @AllArgsConstructor
 public class AfishaManager {
 
-    private AfishaRepository repository;
+    private AfishaRepository repository = new AfishaRepository();
 
-    public AfishaManager(AfishaRepository repository) {
-        this.repository = repository;
-    }
-
-    private Film[] film = new Film[0];
     private int lengthOfAfisha = 10;
-
 
     public AfishaManager(int lengthOfAfisha) {
         this.lengthOfAfisha = lengthOfAfisha;
     }
 
-    public AfishaManager(Film[] film) {
-        this.film = film;
+    public AfishaManager(AfishaRepository repository) {
+        this.repository = repository;
     }
 
-    public Film add(Film films){
-        repository.save(films);
-        return films;
+    //Добовляем элемент
+    public void add(Film film) {
+        repository.save(film);
     }
 
-    //Создаём афишу
-    public void filmAdd(Film films) {
-
-        int length = film.length + 1;
-        Film[] tmpfilm = new Film[length];
-
-        for (int i = 0; i < film.length; i++) {
-            tmpfilm[i] = film[i];
-        }
-        int lastIndex = tmpfilm.length - 1;
-        tmpfilm[lastIndex] = films;
-        film = tmpfilm;
+    //Выводим весь массив
+    public Film[] show() {
+        return repository.findAll();
     }
 
     //Выводим афишу в обратном порядке
     public Film[] showAfisha() {
-        if (film.length < lengthOfAfisha) {
-            lengthOfAfisha = film.length;
+        Film[] filmsFromRepository = repository.findAll();
+
+        if (filmsFromRepository.length < lengthOfAfisha) {
+            lengthOfAfisha = filmsFromRepository.length;
         }
+
         Film[] display = new Film[lengthOfAfisha];
         for (int i = 0; i < lengthOfAfisha; i++) {
-            int index = film.length - i - 1;
-            display[i] = film[index];
+            int index = filmsFromRepository.length - i - 1;
+            display[i] = filmsFromRepository[index];
         }
         return display;
     }
