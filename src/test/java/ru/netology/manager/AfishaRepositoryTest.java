@@ -53,7 +53,7 @@ class AfishaRepositoryTest {
     void shouldFindNull() {
         filmsAddToRepository(repo);
         //Возвращаем Null если не находим элемент
-         Film actual = repo.findById(6);
+        Film actual = repo.findById(6);
 
         assertEquals(null, actual);
     }

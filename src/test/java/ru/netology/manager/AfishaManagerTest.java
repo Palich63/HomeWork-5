@@ -1,13 +1,21 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Film;
+import ru.netology.repository.AfishaRepository;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+@ExtendWith(MockitoExtension.class)
 class AfishaManagerTest {
-
-    private AfishaManager manager;
+    @Mock
+    AfishaRepository repository;
+    @InjectMocks
+    AfishaManager manager;
     // Создаём фильмы
     private static Film first = new Film(1, "Бладшот", "боевик");
     private static Film second = new Film(2, "Вперёд", "мультфильм");
