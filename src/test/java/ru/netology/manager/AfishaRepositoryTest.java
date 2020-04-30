@@ -30,6 +30,7 @@ class AfishaRepositoryTest {
     @Test
     void shouldCleanAll() {
         filmsAddToRepository(repo);
+
         //Очищаем массив
         repo.removeAll();
         Film[] expected = new Film[0];
@@ -42,6 +43,7 @@ class AfishaRepositoryTest {
     @Test
     void shouldFindById() {
         filmsAddToRepository(repo);
+
         //Ищим валидный элемент
         Film expected = new Film(3, "Отель-Белград", "комедия");
         Film actual = repo.findById(3);
@@ -52,6 +54,7 @@ class AfishaRepositoryTest {
     @Test
     void shouldFindNull() {
         filmsAddToRepository(repo);
+
         //Возвращаем Null если не находим элемент
         Film actual = repo.findById(6);
 
@@ -61,6 +64,7 @@ class AfishaRepositoryTest {
     @Test
     void shouldRemoveById() {
         filmsAddToRepository(repo);
+
         //Удаляем валидный элемент
         Film[] expected = new Film[]{first, second, third, fifth};
         repo.removeById(4);

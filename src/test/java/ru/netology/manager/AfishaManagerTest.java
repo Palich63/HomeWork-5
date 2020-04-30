@@ -9,6 +9,7 @@ import ru.netology.domain.Film;
 import ru.netology.repository.AfishaRepository;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class AfishaManagerTest {
@@ -42,8 +43,12 @@ class AfishaManagerTest {
 
     @Test
     void shouldDisplayThreeFilmsInAfisha() {
-        manager = new AfishaManager(3);
+        manager = new AfishaManager(repository,3);
         filmsAddToManager(manager);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
+        doReturn(returned).when(repository).findAll();
+
 
         //Выводим последние 3 фильмов
         Film[] expectedLastThree = new Film[]{seventh, sixth, fifth};
@@ -54,8 +59,11 @@ class AfishaManagerTest {
 
     @Test
     void shouldDisplayfiveFilmsInAfisha() {
-        manager = new AfishaManager(5);
+        manager = new AfishaManager(repository, 5);
         filmsAddToManager(manager);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
+        doReturn(returned).when(repository).findAll();
 
         //Выводим последние 5 фильмов
         Film[] expectedLastFive = new Film[]{seventh, sixth, fifth, fourth, third};
@@ -66,8 +74,11 @@ class AfishaManagerTest {
 
     @Test
     void shouldLessDisplayFilm() {
-        manager = new AfishaManager();
+        manager = new AfishaManager(repository);
         filmsAddToManager(manager);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
+        doReturn(returned).when(repository).findAll();
 
         // Если в массиве меньше 10 фильмов выводим столько сколько есть.
         Film[] expectedSeven = new Film[]{seventh, sixth, fifth, fourth, third, second, first};
@@ -78,12 +89,15 @@ class AfishaManagerTest {
 
     @Test
     void shouldDisplayByDefaultAfisha() {
-        manager = new AfishaManager();
+        manager = new AfishaManager(repository);
         filmsAddToManager(manager);
         manager.add(eighth);
         manager.add(ninth);
         manager.add(tenth);
         manager.add(eleventh);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
 
         //Выводим фильмы в обратном порядке (по умолчанию 10)
         Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
@@ -94,11 +108,14 @@ class AfishaManagerTest {
 
     @Test
     void shouldfilmAddToAfisha() {
-        manager = new AfishaManager();
+        manager = new AfishaManager(repository);
         filmsAddToManager(manager);
         manager.add(eighth);
         manager.add(ninth);
         manager.add(tenth);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
+        doReturn(returned).when(repository).findAll();
 
         //Массива фильмов в прямом порядке и его проверка
         Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
