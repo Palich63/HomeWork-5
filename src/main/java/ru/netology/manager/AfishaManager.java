@@ -7,7 +7,7 @@ import ru.netology.repository.AfishaRepository;
 @NoArgsConstructor
 public class AfishaManager {
 
-    private AfishaRepository repository = new AfishaRepository();
+    private AfishaRepository repository;
 
     private int defaultfAfishaLength = 10;
     private int lengthOfAfisha;
