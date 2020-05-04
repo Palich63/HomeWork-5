@@ -28,10 +28,10 @@ public class AfishaManager {
 
     //Выводим афишу в обратном порядке
     public Film[] showAfisha() {
-        if (lengthOfAfisha < 0 || lengthOfAfisha > defaultfAfishaLength) {
+        if (lengthOfAfisha <= 0 || lengthOfAfisha > defaultfAfishaLength) {
             lengthOfAfisha = defaultfAfishaLength;
         }
-        if (films.length < defaultfAfishaLength) {
+        if (films.length < lengthOfAfisha) {
             lengthOfAfisha = films.length;
         }
         Film[] display = new Film[lengthOfAfisha];

@@ -1,6 +1,5 @@
 package ru.netology.manager;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Film;
 
@@ -22,9 +21,9 @@ class AfishaManagerTest {
     Film tenth = new Film(10, "Котёл", "драма");
     Film eleventh = new Film(11, "1+1", "драма, комедия");
 
-    @BeforeEach
-    void filmsAddToManager() {
-       manager = new AfishaManager();
+    @Test
+    void shouldfilmAddToAfisha() {
+        manager = new AfishaManager();
         //Зaписываем в массив Film[]
         manager.filmAdd(first);
         manager.filmAdd(second);
@@ -37,68 +36,131 @@ class AfishaManagerTest {
         manager.filmAdd(ninth);
         manager.filmAdd(tenth);
         manager.filmAdd(eleventh);
-    }
+        //Массива фильмов в прямом порядке и его проверка
+        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        Film[] actual = manager.getFilms();
 
-    @Test
-    void shouldfilmAddToAfisha() {
-
-//        //Массива фильмов в прямом порядке и его проверка
-//        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
-//        Film[] actual = manager.getFilms();
-//
-//        assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     void shouldDisplayfiveFilmsInAfisha() {
+        manager = new AfishaManager(5);
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        //Выводим последние 5 фильмов
+        Film[] expectedLastFive = new Film[]{sixth, fifth, fourth, third, second};
+        Film[] actualLastFive = manager.showAfisha();
 
-//        manager.setLengthOfAfisha(5);
-//        //Выводим последние 5 фильмов
-//        Film[] expectedLastFive = new Film[]{eleventh, tenth, ninth, eighth, seventh};
-//        Film[] actualLastFive = manager.showAfisha();
-//
-//        assertArrayEquals(expectedLastFive, actualLastFive);
+        assertArrayEquals(expectedLastFive, actualLastFive);
     }
 
     @Test
     void shouldDisplayThreeFilmsInAfisha() {
+        manager = new AfishaManager(3);
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        //Выводим последние 3 фильмов
+        Film[] expectedLastThree = new Film[]{sixth, fifth, fourth};
+        Film[] actualLastThree = manager.showAfisha();
 
-//        manager.setLengthOfAfisha(3);
-//        //Выводим последние 3 фильмов
-//        Film[] expectedLastThree = new Film[]{eleventh, tenth, ninth};
-//        Film[] actualLastThree = manager.showAfisha();
-//
-//        assertArrayEquals(expectedLastThree, actualLastThree);
+        assertArrayEquals(expectedLastThree, actualLastThree);
     }
 
     @Test
     void shouldDisplayByDefaultAfisha() {
-
+        manager = new AfishaManager();
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        manager.filmAdd(seventh);
+        manager.filmAdd(eighth);
+        manager.filmAdd(ninth);
+        manager.filmAdd(tenth);
+        manager.filmAdd(eleventh);
         //Выводим фильмы в обратном порядке (по умолчанию 10)
-//        Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
-//        Film[] actual = manager.showAfisha();
-//
-//        assertArrayEquals(expected, actual);
+        Film[] expected = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Film[] actual = manager.showAfisha();
+
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     void shouldDisplayZeroFilmsInAfisha() {
         manager = new AfishaManager(0);
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        manager.filmAdd(seventh);
+        manager.filmAdd(eighth);
+        manager.filmAdd(ninth);
+        manager.filmAdd(tenth);
+        manager.filmAdd(eleventh);
         //Проверка при нулевом значении массива
-        Film[] expectedZero = new Film[]{};
+        //Результат вывод массива с длиной по умолчанию
+        Film[] expectedZero = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Film[] actualZero = manager.showAfisha();
 
         assertArrayEquals(expectedZero, actualZero);
     }
 
     @Test
-    void shouldDisplayAfisha() {
-
+    void shouldDisplayDefaultAfisha() {
         manager = new AfishaManager(12);
-        //Проверка вывода при значении массива больше значения по умолчанию
-        Film[] expectedDefault = new Film[]{};
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        manager.filmAdd(seventh);
+        manager.filmAdd(eighth);
+        manager.filmAdd(ninth);
+        manager.filmAdd(tenth);
+        manager.filmAdd(eleventh);
+        //Проверка вывода при значении массива больше значения по умолчанию.
+        //Результат, вывод массива длиной по умолчанию
+        Film[] expectedDefault = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Film[] actualDefault = manager.showAfisha();
 
         assertArrayEquals(expectedDefault, actualDefault);
+    }
+
+    @Test
+    void shouldLessDisplayFilm() {
+        manager = new AfishaManager();
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        manager.filmAdd(seventh);
+        //В случае если фильмов меньше чем вывод значения по умолчанию
+        //Массив фильмов в обратном порядке
+        Film[] expectedSeven = new Film[]{seventh, sixth, fifth, fourth, third, second, first};
+        Film[] actualSeven = manager.showAfisha();
+
+        assertArrayEquals(expectedSeven, actualSeven);
     }
 }
