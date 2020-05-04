@@ -1,13 +1,7 @@
 package ru.netology.repository;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import ru.netology.domain.Film;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AfishaRepository {
 
     private Film[] films = new Film[0];
@@ -35,13 +29,15 @@ public class AfishaRepository {
     public void removeById(int id) {
         Film[] tmpfilm = new Film[films.length - 1];
         int index = 0;
-        for (Film film : films) {
-            if (film.getId() != id) {
-                tmpfilm[index] = film;
-                index++;
+        if (id <= films.length) {
+            for (Film film : films) {
+                if (film.getId() != id) {
+                    tmpfilm[index] = film;
+                    index++;
+                }
             }
+            films = tmpfilm;
         }
-        films = tmpfilm;
     }
 
     public void removeAll() {

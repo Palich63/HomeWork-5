@@ -30,7 +30,35 @@ class AfishaManagerTest {
     private static Film tenth = new Film(10, "Котёл", "драма");
     private static Film eleventh = new Film(11, "1+1", "драма, комедия");
 
-    static void filmsAddToManager(AfishaManager manager) {
+    @Test
+    void shouldCheckAfisha() {
+        manager = new AfishaManager(repository);
+        //Зaписываем в массив Film[]
+        //Добавляем три фильма и проверяем
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+
+        Film[] returned = new Film[]{first, second, third};
+        doReturn(returned).when(repository).findAll();
+
+        Film[] expected = new Film[]{first, second, third};
+        assertArrayEquals(expected, manager.show());
+
+        //Добавляем фильм и снова проверяем
+        manager.add(fourth);
+
+        Film[] returnedFourth = new Film[]{first, second, third, fourth};
+        doReturn(returnedFourth).when(repository).findAll();
+
+        Film[] expectedFourth = new Film[]{first, second, third, fourth};
+
+        assertArrayEquals(expectedFourth, manager.show());
+    }
+
+    @Test
+    void shouldfilmAddToAfisha() {
+        manager = new AfishaManager(repository);
         //Зaписываем в массив Film[]
         manager.add(first);
         manager.add(second);
@@ -39,28 +67,32 @@ class AfishaManagerTest {
         manager.add(fifth);
         manager.add(sixth);
         manager.add(seventh);
-    }
+        manager.add(eighth);
+        manager.add(ninth);
+        manager.add(tenth);
+        manager.add(eleventh);
 
-    @Test
-    void shouldDisplayThreeFilmsInAfisha() {
-        manager = new AfishaManager(repository,3);
-        filmsAddToManager(manager);
-
-        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
         doReturn(returned).when(repository).findAll();
 
+        //Массива фильмов в прямом порядке и его проверка
+        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        Film[] actual = manager.show();
 
-        //Выводим последние 3 фильмов
-        Film[] expectedLastThree = new Film[]{seventh, sixth, fifth};
-        Film[] actualLastThree = manager.showAfisha();
-
-        assertArrayEquals(expectedLastThree, actualLastThree);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     void shouldDisplayfiveFilmsInAfisha() {
         manager = new AfishaManager(repository, 5);
-        filmsAddToManager(manager);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
 
         Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
         doReturn(returned).when(repository).findAll();
@@ -73,9 +105,38 @@ class AfishaManagerTest {
     }
 
     @Test
+    void shouldDisplayThreeFilmsInAfisha() {
+        manager = new AfishaManager(repository, 3);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
+        doReturn(returned).when(repository).findAll();
+
+        //Выводим последние 3 фильмов
+        Film[] expectedLastThree = new Film[]{seventh, sixth, fifth};
+        Film[] actualLastThree = manager.showAfisha();
+
+        assertArrayEquals(expectedLastThree, actualLastThree);
+    }
+
+    @Test
     void shouldLessDisplayFilm() {
         manager = new AfishaManager(repository);
-        filmsAddToManager(manager);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
 
         Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh};
         doReturn(returned).when(repository).findAll();
@@ -90,7 +151,14 @@ class AfishaManagerTest {
     @Test
     void shouldDisplayByDefaultAfisha() {
         manager = new AfishaManager(repository);
-        filmsAddToManager(manager);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
         manager.add(eighth);
         manager.add(ninth);
         manager.add(tenth);
@@ -107,20 +175,83 @@ class AfishaManagerTest {
     }
 
     @Test
-    void shouldfilmAddToAfisha() {
-        manager = new AfishaManager(repository);
-        filmsAddToManager(manager);
+    void shouldDisplayZeroFilmsInAfisha() {
+        manager = new AfishaManager(repository, 0);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
         manager.add(eighth);
         manager.add(ninth);
         manager.add(tenth);
+        manager.add(eleventh);
 
-        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
         doReturn(returned).when(repository).findAll();
 
-        //Массива фильмов в прямом порядке и его проверка
-        Film[] expected = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
-        Film[] actual = manager.show();
+        //Проверка при нулевом значении массива
+        //Результат вывод массива с длиной по умолчанию
+        Film[] expectedZero = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Film[] actualZero = manager.showAfisha();
 
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(expectedZero, actualZero);
+    }
+
+    @Test
+    void shouldDisplayDefaultAfisha() {
+        manager = new AfishaManager(repository, 18);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
+        manager.add(eighth);
+        manager.add(ninth);
+        manager.add(tenth);
+        manager.add(eleventh);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+
+        //Проверка вывода при значении массива больше значения по умолчанию.
+        //Результат, вывод массива длиной по умолчанию
+        Film[] expectedDefault = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Film[] actualDefault = manager.showAfisha();
+
+        assertArrayEquals(expectedDefault, actualDefault);
+    }
+
+    @Test
+    void shouldNegativelengthOfAfisha() {
+        manager = new AfishaManager(repository, -10);
+        //Зaписываем в массив Film[]
+        manager.add(first);
+        manager.add(second);
+        manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
+        manager.add(sixth);
+        manager.add(seventh);
+        manager.add(eighth);
+        manager.add(ninth);
+        manager.add(tenth);
+        manager.add(eleventh);
+
+        Film[] returned = new Film[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
+        doReturn(returned).when(repository).findAll();
+
+        //Проверка вывода при отрицательном значении массива
+        //Результат, вывод массива длиной по умолчанию
+        Film[] expectedNegative = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Film[] actualNegative = manager.showAfisha();
+
+        assertArrayEquals(expectedNegative, actualNegative);
     }
 }

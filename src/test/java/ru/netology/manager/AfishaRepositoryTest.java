@@ -1,24 +1,25 @@
 package ru.netology.manager;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Film;
 import ru.netology.repository.AfishaRepository;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AfishaRepositoryTest {
 
     AfishaRepository repo = new AfishaRepository();
 
     // Создаём фильмы
-    private Film first = new Film(1, "Бладшот", "боевик");
-    private Film second = new Film(2, "Вперёд", "мультфильм");
-    private Film third = new Film(3, "Отель-Белград", "комедия");
-    private Film fourth = new Film(4, "Маяк", "ужасы");
-    private Film fifth = new Film(5, "Полицейская история", "боевик");
+    Film first = new Film(1, "Бладшот", "боевик");
+    Film second = new Film(2, "Вперёд", "мультфильм");
+    Film third = new Film(3, "Отель-Белград", "комедия");
+    Film fourth = new Film(4, "Маяк", "ужасы");
+    Film fifth = new Film(5, "Полицейская история", "боевик");
 
-    void filmsAddToRepository(AfishaRepository repo) {
+    @BeforeEach
+    void filmsAddToRepository() {
         //Зaписываем в массив Film[]
         repo.save(first);
         repo.save(second);
@@ -29,7 +30,6 @@ class AfishaRepositoryTest {
 
     @Test
     void shouldCleanAll() {
-        filmsAddToRepository(repo);
 
         //Очищаем массив
         repo.removeAll();
@@ -42,7 +42,6 @@ class AfishaRepositoryTest {
 
     @Test
     void shouldFindById() {
-        filmsAddToRepository(repo);
 
         //Ищим валидный элемент
         Film expected = new Film(3, "Отель-Белград", "комедия");
@@ -53,17 +52,15 @@ class AfishaRepositoryTest {
 
     @Test
     void shouldFindNull() {
-        filmsAddToRepository(repo);
 
         //Возвращаем Null если не находим элемент
         Film actual = repo.findById(6);
 
-        assertEquals(null, actual);
+        assertNull(actual);
     }
 
     @Test
     void shouldRemoveById() {
-        filmsAddToRepository(repo);
 
         //Удаляем валидный элемент
         Film[] expected = new Film[]{first, second, third, fifth};
@@ -71,7 +68,16 @@ class AfishaRepositoryTest {
         Film[] actual = repo.findAll();
 
         assertArrayEquals(expected, actual);
+    }
 
+    @Test
+    void shouldRemoteNotExist() {
 
+        //Если при удалении элемент не найден возвращаем полностью массив
+        Film[] expected = new Film[]{first, second, third, fourth, fifth};
+        repo.removeById(8);
+        Film[] actual = repo.findAll();
+
+        assertArrayEquals(expected, actual);
     }
 }
