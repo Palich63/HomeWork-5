@@ -22,6 +22,26 @@ class AfishaManagerTest {
     Film eleventh = new Film(11, "1+1", "драма, комедия");
 
     @Test
+    void shouldCheckAfisha() {
+        manager = new AfishaManager();
+        //Зaписываем в массив Film[]
+        //Добавляем три фильма и проверяем
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+
+        Film[] expected = new Film[]{first, second, third};
+        assertArrayEquals(expected, manager.getFilms());
+
+        //Добавляем фильм и снова проверяем
+        manager.filmAdd(fourth);
+
+        Film[] expectedFourth = new Film[]{first, second, third, fourth};
+
+        assertArrayEquals(expectedFourth, manager.getFilms());
+    }
+
+    @Test
     void shouldfilmAddToAfisha() {
         manager = new AfishaManager();
         //Зaписываем в массив Film[]
@@ -124,7 +144,7 @@ class AfishaManagerTest {
 
     @Test
     void shouldDisplayDefaultAfisha() {
-        manager = new AfishaManager(12);
+        manager = new AfishaManager(18);
         //Зaписываем в массив Film[]
         manager.filmAdd(first);
         manager.filmAdd(second);
@@ -162,5 +182,28 @@ class AfishaManagerTest {
         Film[] actualSeven = manager.showAfisha();
 
         assertArrayEquals(expectedSeven, actualSeven);
+    }
+
+    @Test
+    void shouldNegativelengthOfAfisha() {
+        manager = new AfishaManager(-10);
+        //Зaписываем в массив Film[]
+        manager.filmAdd(first);
+        manager.filmAdd(second);
+        manager.filmAdd(third);
+        manager.filmAdd(fourth);
+        manager.filmAdd(fifth);
+        manager.filmAdd(sixth);
+        manager.filmAdd(seventh);
+        manager.filmAdd(eighth);
+        manager.filmAdd(ninth);
+        manager.filmAdd(tenth);
+        manager.filmAdd(eleventh);
+        //Проверка вывода при отрицательном значении массива
+        //Результат, вывод массива длиной по умолчанию
+        Film[] expectedNegative = new Film[]{eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Film[] actualNegative = manager.showAfisha();
+
+        assertArrayEquals(expectedNegative, actualNegative);
     }
 }
